@@ -113,8 +113,7 @@
                 <version>2.19.1</version>
                 <configuration>
                     <suiteXmlFiles>
-                        <suiteXmlFile>testng.xml</suiteXmlFile>
-                        <suiteXmlFile>testng1.xml</suiteXmlFile>
+                       <suiteXmlFile>testng1.xml</suiteXmlFile>
                     </suiteXmlFiles>
                     <reportFormat>plain</reportFormat>
                     <redirectTestOutputToFile>false</redirectTestOutputToFile>
