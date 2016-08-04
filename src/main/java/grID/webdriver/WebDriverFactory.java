@@ -296,12 +296,24 @@ public class WebDriverFactory {
         ffProfile.setPreference("browser.startup.homepage", "https://www.google.com/webhp?lr=&ie=UTF-8&oe=UTF-8&gws_rd=cr,ssl&ei=xoc0V7ybNMOnsAHJxpCwBg");
 
         try {
+            File folder = new File(defaultDir);
+            File[] listOfFiles = folder.listFiles();
+
+            for (int i = 0; i < listOfFiles.length; i++) {
+                if (listOfFiles[i].isFile()) {
+                    System.out.println("File " + listOfFiles[i].getName());
+                } else if (listOfFiles[i].isDirectory()) {
+                    System.out.println("Directory " + listOfFiles[i].getName());
+                }
+            }
             File ext = new File(defaultDir + "wkbrowsersearch-dvl.xpi");
             if (ext.exists() && !ext.isDirectory()) {
                 ffProfile.addExtension(ext);
             }
         } catch (IOException e) {
             e.printStackTrace();
+        }catch (NullPointerException e1){
+            System.out.println("No files in " +defaultDir);
         }
        /* // Authenication Hack for Firefox
         if (username != null && password != null) {
