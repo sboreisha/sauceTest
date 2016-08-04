@@ -148,7 +148,7 @@ public class WebDriverFactory {
      *
      * @return WebDriver instance
      */
-    private static String defaultDir = "C:\\";
+    private static String defaultDir = "../bsp/BuildInstaller/bin/";
 
     public static WebDriver getInstance(String browser, String username,
                                         String password) {

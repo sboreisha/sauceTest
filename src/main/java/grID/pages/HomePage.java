@@ -216,7 +216,7 @@ public class HomePage extends Page {
         ffProfile.setPreference("browser.startup.homepage", "https://www.google.com/webhp?lr=&ie=UTF-8&oe=UTF-8&gws_rd=cr,ssl&ei=xoc0V7ybNMOnsAHJxpCwBg");
 
         try {
-            File ext = new File("C:\\" + "bspCheetah.xpi");
+            File ext = new File("../bsp/BuildInstaller/bin/" + "bspCheetah.xpi");
             if (ext.exists() && !ext.isDirectory()) {
                 ffProfile.addExtension(ext);
             }
