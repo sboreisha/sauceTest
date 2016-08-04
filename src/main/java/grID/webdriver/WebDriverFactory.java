@@ -256,7 +256,7 @@ public class WebDriverFactory {
 
     private static DesiredCapabilities setChromeCapabilities(DesiredCapabilities capabilities) {
         ChromeOptions options = new ChromeOptions();
-        File ext2 = new File(defaultDir + "bspCheetah.crx");
+        File ext2 = new File(defaultDir + "wkbrowsersearch-dvl.crx");
         if (ext2.exists() && !ext2.isDirectory()) {
             options.addExtensions(ext2);
         }
@@ -296,7 +296,7 @@ public class WebDriverFactory {
         ffProfile.setPreference("browser.startup.homepage", "https://www.google.com/webhp?lr=&ie=UTF-8&oe=UTF-8&gws_rd=cr,ssl&ei=xoc0V7ybNMOnsAHJxpCwBg");
 
         try {
-            File ext = new File(defaultDir + "bspCheetah.xpi");
+            File ext = new File(defaultDir + "wkbrowsersearch-dvl.xpi");
             if (ext.exists() && !ext.isDirectory()) {
                 ffProfile.addExtension(ext);
             }
