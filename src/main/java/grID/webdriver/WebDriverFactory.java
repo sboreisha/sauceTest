@@ -275,6 +275,7 @@ public class WebDriverFactory {
         return capabilities;
     }
 
+
     private static FirefoxProfile setFFProfile() {
         FirefoxProfile ffProfile = new FirefoxProfile();
         ffProfile.setPreference("intl.accept_languages", "en");
@@ -313,7 +314,7 @@ public class WebDriverFactory {
         } catch (IOException e) {
             e.printStackTrace();
         }catch (NullPointerException e1){
-            System.out.println("No files in " +defaultDir);
+            System.out.println("No files");
         }
        /* // Authenication Hack for Firefox
         if (username != null && password != null) {
