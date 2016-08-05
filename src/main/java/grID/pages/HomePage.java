@@ -243,7 +243,7 @@ public class HomePage extends Page {
         webDriver.switchTo().frame(iframe);
         wait.until(ExpectedConditions.visibilityOf(loginButtonBSP));
         //loginInputBSP.sendKeys("legal-wb-stg@wk.com");
-        loginButtonBSP.sendKeys("bsp1@ct77.eu");
+        loginInputBSP.sendKeys("bsp1@ct77.eu");
         passwordInputBSP.sendKeys("password");
         loginButtonBSP.submit();
         webDriver.switchTo().defaultContent();
