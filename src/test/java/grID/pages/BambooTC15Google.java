@@ -70,7 +70,7 @@ BambooTC15Google extends TestBase {
         System.out.println("BSP search count " + bspSearchCount);
         WebDriverWait wait = new WebDriverWait(webDriver, 30);
         wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(homepage.iframe));
-        homepage.goToCheetah();
+       // homepage.goToCheetah();
         webDriver.switchTo().defaultContent();
         homepage.changeTab(1);
         System.out.println("Cheetah search count " + cheetahPage.getCheetahSearchCount());
