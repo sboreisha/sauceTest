@@ -61,8 +61,8 @@ public class WebDriverFactory {
      *
      * @return RemoteWebDriver
      */
-    private static String defaultDir = "../bsp/BuildInstaller/bin/";
-    //private static String defaultDir = "c:\\";
+    //private static String defaultDir = "../bsp/BuildInstaller/bin/";
+    private static String defaultDir = "c:\\";
     public static WebDriver getInstance(String gridHubUrl, Browser browser,
                                         String username, String password) {
 

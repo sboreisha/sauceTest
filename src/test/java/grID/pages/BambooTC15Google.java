@@ -57,7 +57,7 @@ BambooTC15Google extends TestBase {
         wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(homepage.iframe));
         wait.until(ExpectedConditions.visibilityOf(homepage.bspSearchItem));
         softAssert.assertTrue(homepage.isElementPresent(homepage.bspSearchInfo), "BSP search result count is present");
-        softAssert.assertTrue(homepage.isElementPresent(homepage.wkBrand), "Brand image is present");
+        softAssert.assertFalse(homepage.isElementPresent(homepage.wkBrand), "Brand image is present");
         softAssert.assertAll();
     }
 
