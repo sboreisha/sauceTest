@@ -98,26 +98,20 @@ public class HomePage extends Page {
     @FindBy(how = How.NAME, using = "q")
     private WebElement bingSearchInput;
 
-    public void getAllElements() {
-        WebDriverWait wait = new WebDriverWait(webDriver, 30);
-        wait.until(ExpectedConditions.visibilityOf(bspContainer));
-        for (WebElement el : allElements) {
-            System.out.println("All ell tag +" + el.getAttribute("tag"));
-            System.out.println("El name " + el.getAttribute("class"));
-            System.out.println("El text " + el.getText());
-            System.out.println("El name " + el.getAttribute("name"));
-            System.out.println("---------------------------");
-        }
-    }
+    public WebElement getbspSearchItem() {
+        boolean flag = false;
+        int attempts = 2;
 
-    public void getAllFrames() {
-        WebDriverWait wait = new WebDriverWait(webDriver, 30);
-        for (WebElement el : iframes) {
-            System.out.println("EL+src " + el.getAttribute("src"));
-            System.out.println("EL+ class " + el.getAttribute("class"));
-            System.out.println("El+ id " + el.getAttribute("id"));
-            System.out.println("----------------------");
+        while (attempts > 0) {
+            try {
+                bspSearchItem.getText();
+                attempts--;
+            } catch (StaleElementReferenceException e) {
+                attempts--;
+                System.out.println(e.toString());
+            }
         }
+        return bspSearchItem;
     }
 
     public int getBSPSearchCount() {
@@ -148,11 +142,12 @@ public class HomePage extends Page {
         try {
             googleSearchInput.sendKeys(" next\n");
             googleSearchInput.submit();
-            }catch (StaleElementReferenceException e1){
+
+            WebDriverWait wait = new WebDriverWait(webDriver, 60);
+            wait.until(ExpectedConditions.visibilityOf(googleSearchResult));
+        } catch (StaleElementReferenceException e1) {
             Reporter.log("Stale element exception");
         }
-        WebDriverWait wait = new WebDriverWait(webDriver, 60);
-        wait.until(ExpectedConditions.visibilityOf(googleSearchResult));
         threadSleep(5000);
     }
 

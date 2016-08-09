@@ -114,6 +114,7 @@
                 <configuration>
                     <suiteXmlFiles>
                         <suiteXmlFile>testng1.xml</suiteXmlFile>
+                        <suiteXmlFile>testng.xml</suiteXmlFile>
                     </suiteXmlFiles>
                     <reportFormat>plain</reportFormat>
                     <redirectTestOutputToFile>false</redirectTestOutputToFile>
@@ -128,7 +129,7 @@
                         </property>
                         <property>
                             <name>suitethreadpoolsize</name>
-                            <value>3</value>
+                            <value>2</value>
                         </property>
                     </properties>
                     <systemProperties>

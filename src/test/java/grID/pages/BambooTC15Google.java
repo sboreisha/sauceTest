@@ -26,12 +26,6 @@ BambooTC15Google extends TestBase {
         cheetahPage = PageFactory.initElements(webDriver, CheetahPage.class);
     }
 
-   /* @Parameters({"path"})
-    @BeforeMethod
-    public void goToHomePage(String path) {
-        webDriver.get(websiteUrl + path);
-    }*/
-
 
     @Test(description = "BSP test results are shown for Google.com")
     public void test1SearchResultLogin() {
@@ -55,9 +49,9 @@ BambooTC15Google extends TestBase {
         //homepage.expandPlugin();
         WebDriverWait wait = new WebDriverWait(webDriver, 60);
         wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(homepage.iframe));
-        wait.until(ExpectedConditions.visibilityOf(homepage.bspSearchItem));
+        wait.until(ExpectedConditions.visibilityOf(homepage.getbspSearchItem()));
         softAssert.assertTrue(homepage.isElementPresent(homepage.bspSearchInfo), "BSP search result count is present");
-        softAssert.assertFalse(homepage.isElementPresent(homepage.wkBrand), "Brand image is present");
+        softAssert.assertTrue(homepage.isElementPresent(homepage.wkBrand), "Brand image is present");
         softAssert.assertAll();
     }
 

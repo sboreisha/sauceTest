@@ -8,7 +8,31 @@
         <listener class-name="org.uncommons.reportng.HTMLReporter"/>
         <listener class-name="org.uncommons.reportng.JUnitXMLReporter"/>
     </listeners>
-
+    <test name="Bing">
+        <classes>
+            <class name="grID.pages.BambooTC15Bing"/>
+        </classes>
+    </test>
+    <test name="Google">
+        <classes>
+            <class name="grID.pages.BambooTC15GoogleNL"/>
+        </classes>
+    </test>
+    <test name="Yahoo">
+        <classes>
+            <class name="grID.pages.BambooTC15Yahoo"/>
+        </classes>
+    </test>
+    <test name="TC12">
+        <classes>
+            <class name="grID.pages.BambooTC12"/>
+        </classes>
+    </test>
+    <test name="TC13">
+        <classes>
+            <class name="grID.pages.BambooTC13"/>
+        </classes>
+    </test>
     <test name="Coogle.com">
         <classes>
             <class name="grID.pages.BambooTC15Google"/>

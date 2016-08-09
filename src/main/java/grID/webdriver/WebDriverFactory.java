@@ -62,7 +62,8 @@ public class WebDriverFactory {
      * @return RemoteWebDriver
      */
     private static String defaultDir = "../bsp/BuildInstaller/bin/";
-   // private static String defaultDir = "c:\\";
+
+    //private static String defaultDir = "c:\\";
     public static WebDriver getInstance(String gridHubUrl, Browser browser,
                                         String username, String password) {
 
@@ -299,7 +300,7 @@ public class WebDriverFactory {
         ffProfile.setPreference("browser.startup.homepage", "https://www.google.com/webhp?lr=&ie=UTF-8&oe=UTF-8&gws_rd=cr,ssl&ei=xoc0V7ybNMOnsAHJxpCwBg");
 
         try {
-            File folder = new File(defaultDir);
+            /*File folder = new File(defaultDir);
             File[] listOfFiles = folder.listFiles();
 
             for (int i = 0; i < listOfFiles.length; i++) {
@@ -308,14 +309,14 @@ public class WebDriverFactory {
                 } else if (listOfFiles[i].isDirectory()) {
                     System.out.println("Directory " + listOfFiles[i].getName());
                 }
-            }
+            }*/
             File ext = new File(defaultDir + "wkbrowsersearch-dvl.xpi");
             if (ext.exists() && !ext.isDirectory()) {
                 ffProfile.addExtension(ext);
             }
         } catch (IOException e) {
             e.printStackTrace();
-        }catch (NullPointerException e1){
+        } catch (NullPointerException e1) {
             System.out.println("No files");
         }
        /* // Authenication Hack for Firefox
