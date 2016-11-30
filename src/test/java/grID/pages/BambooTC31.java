@@ -1,74 +1,58 @@
 package grID.pages;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.IOException;
-import java.lang.reflect.Method;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
-
-import com.beust.jcommander.Parameter;
 import com.saucelabs.saucerest.SauceREST;
+import grID.util.Browser;
+import grID.util.PropertyLoader;
+import grID.webdriver.WebDriverFactory;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.jxpath.functions.MethodFunction;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxProfile;
-import org.openqa.selenium.remote.Augmenter;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.remote.ScreenshotException;
-import org.testng.ITestContext;
+import org.openqa.selenium.support.PageFactory;
+import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.Reporter;
 import org.testng.annotations.*;
 
-import grID.util.PropertyLoader;
-import grID.util.Browser;
-import grID.webdriver.WebDriverFactory;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.IOException;
+import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
-public class TestBase {
-    private static final String SCREENSHOT_FOLDER = "target/screenshots/";
-    private static final String SCREENSHOT_FORMAT = ".png";
 
+public class
+BambooTC31 extends TestBase {
     protected WebDriver webDriver;
-
     protected String gridHubUrl;
-
-    protected String websiteUrl;
-
-    protected Browser browser;
+    protected HomePage homepage;
 
     @Parameters({"browserName", "browserVersion"})
     @BeforeClass
     public void init(String browserName, String browserVersion) {
         websiteUrl = PropertyLoader.loadProperty("site.url");
         gridHubUrl = PropertyLoader.loadProperty("grid2.hub");
-
         browser = new Browser();
-
         browser.setName(browserName);
         browser.setVersion(browserVersion);
         browser.setPlatform(PropertyLoader.loadProperty("browser.platform"));
-
         String username = PropertyLoader.loadProperty("user.username");
         String password = PropertyLoader.loadProperty("user.password");
-
-        webDriver = WebDriverFactory.getInstance(gridHubUrl, browser, username,
-                password);
+        webDriver = getFF();
         webDriver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
     }
 
-    /*@AfterSuite(alwaysRun = true)
-    public void tearDown() {
-        if (webDriver != null) {
-            webDriver.quit();
-        }
-    }*/
+    @Parameters({"browserName"})
+    @Test(description = "Plugin is not shown")
+    public void test1PluginIsNotShown() {
+        homepage = PageFactory.initElements(webDriver, HomePage.class);
+        webDriver.get("https://www.google.com/search?q=where");
+        homepage.waitForJSandJQueryToLoad();
+        Assert.assertFalse(homepage.isElementPresent(homepage.iframe));
+    }
 
     @AfterClass(alwaysRun = true)
     public void tearDown() {
@@ -76,7 +60,6 @@ public class TestBase {
             webDriver.quit();
         }
     }
-
     @AfterMethod
     public void setScreenshot(ITestResult result, Method method) {
         String testDescription = method.getAnnotation(org.testng.annotations.Test.class).description();
@@ -120,40 +103,5 @@ public class TestBase {
                 e1.printStackTrace();
             }
         }
-    }
-
-    public WebDriver getFF() {
-        DesiredCapabilities capability = new DesiredCapabilities();
-        capability = DesiredCapabilities.firefox();
-        capability.setCapability("platform", "Windows 8.1");
-        capability.setCapability("version", "47.0");
-        try {
-            webDriver = new RemoteWebDriver(new URL("http://WK-Sergei:ae7faa3c-25ae-499c-a647-ef64451c7a81@ondemand.saucelabs.com:80/wd/hub"), capability);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-
-        return webDriver;
-    }
-
-    public static FirefoxProfile setFFProfileNoBSP() {
-        FirefoxProfile ffProfile = new FirefoxProfile();
-        ffProfile.setPreference("intl.accept_languages", "en");
-        ffProfile.setAcceptUntrustedCertificates(true);
-        ffProfile.setPreference("browser.download.folderList", 2);
-        ffProfile.setPreference("browser.download.manager.showWhenStarting", false);
-        ffProfile.setPreference("browser.helperApps.neverAsk.saveToDisk", "application/x-xpinstall .xpi");
-        ffProfile.setPreference("browser.helperApps.neverAsk.openFile", "application/x-xpinstall .xpi");
-        ffProfile.setPreference("browser.helperApps.alwaysAsk.force", false);
-        ffProfile.setPreference("browser.download.manager.alertOnEXEOpen", false);
-        ffProfile.setPreference("browser.download.manager.focusWhenStarting", false);
-        ffProfile.setPreference("browser.download.manager.useWindow", false);
-        ffProfile.setPreference("browser.download.manager.showAlertOnComplete", false);
-        ffProfile.setPreference("browser.download.manager.closeWhenDone", false);
-        ffProfile.setPreference("browser.search.defaultenginename", "Google");
-        ffProfile.setPreference("browser.search.defaultenginename.US", "data:text/plain,browser.search.defaultenginename.US=Google");
-        ffProfile.setPreference("browser.search.countryCode", "US");
-        ffProfile.setPreference("browser.startup.homepage", "https://www.google.com/webhp?lr=&ie=UTF-8&oe=UTF-8&gws_rd=cr,ssl&ei=xoc0V7ybNMOnsAHJxpCwBg");
-        return ffProfile;
     }
 }

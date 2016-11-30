@@ -63,7 +63,7 @@ BambooTC13 extends TestBase {
     public void test3CheetahResultsCount() {
         webDriver.switchTo().defaultContent();
         homepage.doGoogleSearch();
-        homepage.threadSleep(1500);
+        homepage.waitForJSandJQueryToLoad();
         int bspSearchCount = homepage.getBSPSearchCount();
         System.out.println("BSP search count "+bspSearchCount);
         WebDriverWait wait = new WebDriverWait(webDriver, 30);

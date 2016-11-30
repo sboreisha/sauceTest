@@ -35,6 +35,18 @@ public class HomePage extends Page {
     @FindBy(how = How.CSS, using = ".settings_btn")
     private WebElement expandBSP;
 
+    @FindBy(how = How.CSS, using = ".wk-icon-menu")
+    private WebElement bspSettings;
+
+    @FindBy(how = How.CSS, using = ".wk-spin")
+    private WebElement spinIcon;
+
+    @FindBy(how = How.CSS, using = ".wk-checkbox-field input")
+    private List<WebElement> bspOptions;
+
+    @FindBy(how = How.CSS, using = ".collapse")
+    public WebElement collapseIcon;
+
     @FindBy(how = How.ID, using = "wkbsContainer")
     private WebElement bspDiv;
 
@@ -98,7 +110,7 @@ public class HomePage extends Page {
     @FindBy(how = How.NAME, using = "q")
     private WebElement bingSearchInput;
 
-    public WebElement getbspSearchItem() {
+    public WebElement getBSPSearchItem() {
         boolean flag = false;
         int attempts = 2;
 
@@ -114,10 +126,25 @@ public class HomePage extends Page {
         return bspSearchItem;
     }
 
+    public void doClickSearchSortByDocumentType() {
+        webDriver.switchTo().defaultContent();
+        webDriver.switchTo().frame(iframe);
+        WebDriverWait wait = new WebDriverWait(webDriver, 60);
+        wait.until(ExpectedConditions.elementToBeClickable(bspSettings));
+        bspSettings.click();
+        wait.until(ExpectedConditions.elementToBeClickable(bspOptions.get(0)));
+        bspOptions.get(0).click();
+        waitForJSandJQueryToLoad();
+        // wait.ignoring(StaleElementReferenceException.class).ignoring(NoSuchElementException.class).pollingEvery(1, TimeUnit.SECONDS).until(ExpectedConditions.visibilityOf(spinIcon));
+        // wait.ignoring(StaleElementReferenceException.class).ignoring(NoSuchElementException.class).until(ExpectedConditions.not(ExpectedConditions.visibilityOf(spinIcon)));
+        //bspSettings.click();
+        webDriver.switchTo().defaultContent();
+    }
+
     public int getBSPSearchCount() {
         webDriver.switchTo().defaultContent();
         webDriver.switchTo().frame(iframe);
-        WebDriverWait wait = new WebDriverWait(webDriver, 30);
+        WebDriverWait wait = new WebDriverWait(webDriver, 60);
         wait.until(ExpectedConditions.visibilityOf(bspSearchItem));
         String search = bspSearchInfo.getText();
         webDriver.switchTo().defaultContent();
@@ -139,6 +166,7 @@ public class HomePage extends Page {
     }
 
     public void doGoogleSearch() {
+        webDriver.switchTo().defaultContent();
         try {
             googleSearchInput.sendKeys(" next\n");
             googleSearchInput.submit();
@@ -148,7 +176,7 @@ public class HomePage extends Page {
         } catch (StaleElementReferenceException e1) {
             Reporter.log("Stale element exception");
         }
-        threadSleep(5000);
+        waitForJSandJQueryToLoad();
     }
 
     public void doYahooSearch(String text) {
@@ -157,7 +185,7 @@ public class HomePage extends Page {
         yahooSearchInput.sendKeys(text);
         yahooSearchInput.submit();
         wait.until(ExpectedConditions.visibilityOf(yahooSearchResult));
-        threadSleep(5000);
+        waitForJSandJQueryToLoad();
     }
 
     public void doBingSearch(String text) {
@@ -166,71 +194,34 @@ public class HomePage extends Page {
         bingSearchInput.sendKeys(text);
         bingSearchInput.submit();
         wait.until(ExpectedConditions.visibilityOf(bingSearchResult));
-        threadSleep(5000);
+        waitForJSandJQueryToLoad();
     }
 
     public void expandPlugin() {
-        webDriver.switchTo().defaultContent();
         WebDriverWait wait = new WebDriverWait(webDriver, 60);
-        threadSleep(500);
-
+        webDriver.switchTo().defaultContent();
         wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(iframe));
-
-        threadSleep(1500);
-        if (isElementPresent(expandBSP)) {
-            expandBSP.click();
-            webDriver.switchTo().defaultContent();
-        } else {
-            System.out.println("Expand button is not displayed");
-        }
+        wait.ignoring(StaleElementReferenceException.class).pollingEvery(1, TimeUnit.SECONDS).until(ExpectedConditions.visibilityOf(expandBSP));
+        expandBSP.click();
+        webDriver.switchTo().defaultContent();
         webDriver.switchTo().frame(iframe);
         wait.until(ExpectedConditions.visibilityOf(loginButtonBSP));
         webDriver.switchTo().defaultContent();
     }
 
-    public WebDriver getFF() {
-        DesiredCapabilities capability = new DesiredCapabilities();
-        capability = DesiredCapabilities.firefox();
-        FirefoxProfile ffProfile = new FirefoxProfile();
-        ffProfile.setPreference("intl.accept_languages", "en");
-        ffProfile.setAcceptUntrustedCertificates(true);
-        ffProfile.setPreference("browser.download.folderList", 2);
-        ffProfile.setPreference("browser.download.manager.showWhenStarting", false);
-        ffProfile.setPreference("browser.helperApps.neverAsk.saveToDisk", "application/x-xpinstall .xpi");
-        ffProfile.setPreference("browser.helperApps.neverAsk.openFile", "application/x-xpinstall .xpi");
-        ffProfile.setPreference("browser.helperApps.alwaysAsk.force", false);
-        ffProfile.setPreference("browser.download.manager.alertOnEXEOpen", false);
-        ffProfile.setPreference("browser.download.manager.focusWhenStarting", false);
-        ffProfile.setPreference("browser.download.manager.useWindow", false);
-        ffProfile.setPreference("browser.download.manager.showAlertOnComplete", false);
-        ffProfile.setPreference("browser.download.manager.closeWhenDone", false);
-        ffProfile.setPreference("browser.download.dir", "C:\\");
-        ffProfile.setPreference("browser.search.defaultenginename", "Google");
-        ffProfile.setPreference("browser.search.defaultenginename.US", "data:text/plain,browser.search.defaultenginename.US=Google");
-        ffProfile.setPreference("browser.search.countryCode", "US");
-        ffProfile.setPreference("browser.startup.homepage", "https://www.google.com/webhp?lr=&ie=UTF-8&oe=UTF-8&gws_rd=cr,ssl&ei=xoc0V7ybNMOnsAHJxpCwBg");
-
-        try {
-            File ext = new File("../bsp/BuildInstaller/bin/" + "bspCheetah.xpi");
-            if (ext.exists() && !ext.isDirectory()) {
-                ffProfile.addExtension(ext);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        // Authenication Hack for Firefox
-        capability.setCapability("platform", "Windows 8.1");
-        capability.setCapability(FirefoxDriver.PROFILE, ffProfile);
-        capability.setCapability(CapabilityType.TAKES_SCREENSHOT, true);
-        try {
-            webDriver = new RemoteWebDriver(new URL("http://WK-Sergei:ae7faa3c-25ae-499c-a647-ef64451c7a81@ondemand.saucelabs.com:80/wd/hub"), capability);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
-
-        return webDriver;
+    public void showResults() {
+        WebDriverWait wait = new WebDriverWait(webDriver, 60);
+        webDriver.switchTo().defaultContent();
+        wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(iframe));
+        wait.ignoring(StaleElementReferenceException.class).pollingEvery(1, TimeUnit.SECONDS).until(ExpectedConditions.visibilityOf(expandBSP));
+        expandBSP.click();
+        webDriver.switchTo().defaultContent();
+        webDriver.switchTo().frame(iframe);
+        wait.until(ExpectedConditions.visibilityOf(bspSearchItem));
+        webDriver.switchTo().defaultContent();
     }
+
+
 
     public void doLogin() {
         WebDriverWait wait = new WebDriverWait(webDriver, 30);
@@ -238,12 +229,14 @@ public class HomePage extends Page {
         webDriver.switchTo().frame(iframe);
         wait.until(ExpectedConditions.visibilityOf(loginButtonBSP));
         //loginInputBSP.sendKeys("legal-wb-stg@wk.com");
+        wait.until(ExpectedConditions.visibilityOf(loginInputBSP));
         loginInputBSP.sendKeys("bsp1@ct77.eu");
         passwordInputBSP.sendKeys("password");
         loginButtonBSP.submit();
         webDriver.switchTo().defaultContent();
         webDriver.switchTo().frame(iframe);
         wait.until(ExpectedConditions.visibilityOf(searchWindow));
+        webDriver.switchTo().defaultContent();
     }
 
     private void doLoginCI() {
@@ -309,6 +302,10 @@ public class HomePage extends Page {
             return true;
         } catch (org.openqa.selenium.NoSuchElementException e) {
             return false;
+        } catch (org.openqa.selenium.StaleElementReferenceException e) {
+            WebDriverWait wait = new WebDriverWait(webDriver, 20);
+            wait.ignoring(StaleElementReferenceException.class).pollingEvery(1, TimeUnit.SECONDS).until(ExpectedConditions.visibilityOf(el));
+            return el.isDisplayed();
         }
     }
 
@@ -333,6 +330,12 @@ public class HomePage extends Page {
         return check;
     }
 
+    public void openNewTab()
+
+    {
+        webDriver.findElement(By.cssSelector("body")).sendKeys(Keys.CONTROL + "t");
+        ArrayList<String> tabs = new ArrayList<String>(webDriver.getWindowHandles());
+    }
 
     public void changeTab(Integer tab) {
         waitForNewTab(webDriver, 30);
@@ -367,7 +370,7 @@ public class HomePage extends Page {
     }
 
     public boolean waitForJSandJQueryToLoad() {
-        WebDriverWait wait = new WebDriverWait(webDriver, 30);
+        WebDriverWait wait = new WebDriverWait(webDriver, 60);
         // wait for jQuery to load
         ExpectedCondition<Boolean> jQueryLoad = new ExpectedCondition<Boolean>() {
             @Override

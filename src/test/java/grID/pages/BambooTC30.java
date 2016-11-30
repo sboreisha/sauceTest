@@ -1,6 +1,5 @@
 package grID.pages;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -11,7 +10,7 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 public class
-BambooTC12 extends TestBase {
+BambooTC30 extends TestBase {
     HomePage homepage;
 
     @Parameters({"path"})
@@ -37,20 +36,15 @@ BambooTC12 extends TestBase {
         homepage.waitForJSandJQueryToLoad();
         webDriver.switchTo().defaultContent();
         WebDriverWait wait = new WebDriverWait(webDriver, 90);
-        wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(homepage.iframe));
-        homepage.expandPlugin();
-
-        wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(homepage.iframe));
-        wait.until(ExpectedConditions.visibilityOf(homepage.loginInputBSP));
-        Assert.assertFalse(homepage.isElementPresent(homepage.searchResult));
+        wait.until(ExpectedConditions.visibilityOf(homepage.iframe));
+        Assert.assertTrue(homepage.isElementPresent(homepage.iframe), "Plugin is shown");
     }
 
     @Test(description = "Check BSP search result are not present after search")
     public void test2BSPResultsAfterSearch() {
         webDriver.switchTo().defaultContent();
         homepage.doGoogleSearch();
-
-        //homepage.expandPlugin();
+        homepage.expandPlugin();
         WebDriverWait wait = new WebDriverWait(webDriver, 90);
         wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(homepage.iframe));
         Assert.assertFalse(homepage.isElementPresent(homepage.searchResult));

@@ -2,12 +2,17 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 <suite name="Tests for firefox" verbose="5" parallel="tests" thread-count="5">
     <parameter name="path" value="https://www.google.com/search?q=what"/>
-    <parameter name="browserVersion" value="46.0"/>
+    <parameter name="browserVersion" value="47"/>
     <parameter name="browserName" value="firefox"/>
     <listeners>
         <listener class-name="org.uncommons.reportng.HTMLReporter"/>
         <listener class-name="org.uncommons.reportng.JUnitXMLReporter"/>
     </listeners>
+    <test name="Coogle.com">
+        <classes>
+            <class name="grID.pages.BambooTC15Google"/>
+        </classes>
+    </test>
     <test name="Bing">
         <classes>
             <class name="grID.pages.BambooTC15Bing"/>
@@ -26,16 +31,6 @@
     <test name="TC12">
         <classes>
             <class name="grID.pages.BambooTC12"/>
-        </classes>
-    </test>
-    <test name="TC13">
-        <classes>
-            <class name="grID.pages.BambooTC13"/>
-        </classes>
-    </test>
-    <test name="Coogle.com">
-        <classes>
-            <class name="grID.pages.BambooTC15Google"/>
         </classes>
     </test>
 </suite>

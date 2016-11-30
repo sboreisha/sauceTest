@@ -30,7 +30,7 @@ BambooTC15Google extends TestBase {
     @Test(description = "BSP test results are shown for Google.com")
     public void test1SearchResultLogin() {
         webDriver.get("https://www.google.com/?gws_rd=ssl#q=what");
-        homepage.threadSleep(5000);
+        homepage.waitForJSandJQueryToLoad();
         homepage.doGoogleSearch();
         homepage.expandPlugin();
         webDriver.switchTo().defaultContent();
@@ -49,7 +49,7 @@ BambooTC15Google extends TestBase {
         //homepage.expandPlugin();
         WebDriverWait wait = new WebDriverWait(webDriver, 60);
         wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(homepage.iframe));
-        wait.until(ExpectedConditions.visibilityOf(homepage.getbspSearchItem()));
+        wait.until(ExpectedConditions.visibilityOf(homepage.getBSPSearchItem()));
         softAssert.assertTrue(homepage.isElementPresent(homepage.bspSearchInfo), "BSP search result count is present");
         softAssert.assertTrue(homepage.isElementPresent(homepage.wkBrand), "Brand image is present");
         softAssert.assertAll();
@@ -59,7 +59,7 @@ BambooTC15Google extends TestBase {
     public void test3CheetahResultsCount() {
         webDriver.switchTo().defaultContent();
         homepage.doGoogleSearch();
-        homepage.threadSleep(1500);
+        homepage.waitForJSandJQueryToLoad();
         int bspSearchCount = homepage.getBSPSearchCount();
         System.out.println("BSP search count " + bspSearchCount);
         WebDriverWait wait = new WebDriverWait(webDriver, 30);

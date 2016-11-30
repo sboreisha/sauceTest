@@ -35,7 +35,7 @@ BambooTC15Yahoo extends TestBase {
     @Test(description = "BSP test results are shown for yahoo")
     public void test1SearchResultLogin() {
         webDriver.get("https://www.yahoo.com/");
-        homepage.threadSleep(5000);
+        homepage.waitForJSandJQueryToLoad();
         homepage.doYahooSearch("what");
         homepage.expandPlugin();
         webDriver.switchTo().defaultContent();
@@ -65,7 +65,7 @@ BambooTC15Yahoo extends TestBase {
     public void test3CheetahResultsCount() {
         webDriver.switchTo().defaultContent();
         homepage.doYahooSearch(" next");
-        homepage.threadSleep(5500);
+        homepage.waitForJSandJQueryToLoad();
         int bspSearchCount = homepage.getBSPSearchCount();
         System.out.println("BSP search count " + bspSearchCount);
         WebDriverWait wait = new WebDriverWait(webDriver, 30);

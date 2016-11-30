@@ -36,6 +36,7 @@ public class BSPTest extends TestBase {
 
     @Test
     public void testExpandBSP() {
+
         homepage.expandPlugin();
         webDriver.switchTo().defaultContent();
         webDriver.switchTo().frame(0);
