@@ -32,9 +32,6 @@ import grID.util.Browser;
 import grID.webdriver.WebDriverFactory;
 
 public class TestBase {
-    private static final String SCREENSHOT_FOLDER = "target/screenshots/";
-    private static final String SCREENSHOT_FORMAT = ".png";
-
     protected WebDriver webDriver;
 
     protected String gridHubUrl;
@@ -106,22 +103,23 @@ public class TestBase {
     public void catchExceptions(ITestResult result, String testDescription) {
         BufferedWriter writer = null;
         String methodName = result.getName();
+        String browserName = ((RemoteWebDriver) webDriver).getCapabilities().getBrowserName();
         if (!result.isSuccess()) {
             try {
                 String failureImageFileName = methodName;
                 File scrFile = ((TakesScreenshot) webDriver).getScreenshotAs(OutputType.FILE);
-                FileUtils.copyFile(scrFile, new File(failureImageFileName));
-                String userDirector = System.getProperty("user.dir") + "/";
-                String s1 = "<table><tr><td><font style=\"text-decoration: underline;\" size=\"3\" face=\"Comic sans MS\" color=\"green\"><b>" + methodName + "  " + testDescription + "</b></font></td></tr> ";
+                String userDirector = System.getProperty("user.dir").replace("\\", "/") + "/target/surefire-reports/html/";
+                FileUtils.copyFile(scrFile, new File(userDirector + failureImageFileName));
+                String s1 = "<table><tr><td><font size=\"2\" face=\"Comic sans MS\" ><b>" + browserName + " " + methodName + "  " + testDescription + "</b></font></td></tr> ";
                 Reporter.log(s1);
-                Reporter.log("<tr><td><a href=\"" + userDirector + failureImageFileName + "\"><img src=\"file:///" + userDirector + failureImageFileName + "\" alt=\"\"" + "height=’120′ width=’120′/></td></tr> ");
+                String s2 = "<tr><td><a href=\"" + failureImageFileName + "\"><img src=\"" + failureImageFileName + "\" alt=\"\"" + "height=120 width=120/></td></tr> ";
+                Reporter.log(s2);
                 Reporter.setCurrentTestResult(null);
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
         }
     }
-
 
 
 }

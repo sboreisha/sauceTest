@@ -38,7 +38,7 @@ BambooTC29 extends TestBase {
         webDriver.get("https://www.google.com/?gws_rd=ssl#q=what");
         homepage.waitForJSandJQueryToLoad();
         homepage.doGoogleSearch();
-        WebDriverWait wait = new WebDriverWait(webDriver, 30);
+        WebDriverWait wait = new WebDriverWait(webDriver, 60);
         wait.until(ExpectedConditions.visibilityOf(homepage.iframe));
         Assert.assertTrue(homepage.isElementPresent(homepage.iframe), "Plugin is shown");
     }
@@ -47,7 +47,7 @@ BambooTC29 extends TestBase {
     public void test2BSPSearchResultsAreShown() {
         homepage.expandPlugin();
         homepage.doLogin();
-        WebDriverWait wait = new WebDriverWait(webDriver, 30);
+        WebDriverWait wait = new WebDriverWait(webDriver, 60);
         wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(homepage.iframe));
         wait.until(ExpectedConditions.visibilityOf(homepage.bspSearchItem));
         softAssert.assertTrue(homepage.isElementPresent(homepage.bspSearchItem), "BSP search results are present");
@@ -67,7 +67,7 @@ BambooTC29 extends TestBase {
     @Test(description = "Search results are identical to search results in the related product: # of results, content and document group types shown")
     public void test4BSPSearchResultsAreShownWithDocGroups() {
         homepage.doGoogleSearch();
-        WebDriverWait wait = new WebDriverWait(webDriver, 30);
+        WebDriverWait wait = new WebDriverWait(webDriver, 60);
         wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(homepage.iframe));
         wait.until(ExpectedConditions.visibilityOf(homepage.bspSearchItem));
         softAssert.assertTrue(homepage.isElementPresent(homepage.bspSearchItem), "BSP search results are present");
@@ -82,7 +82,7 @@ BambooTC29 extends TestBase {
         homepage.waitForJSandJQueryToLoad();
         int bspSearchCount = homepage.getBSPSearchCount();
         System.out.println("BSP search count " + bspSearchCount);
-        WebDriverWait wait = new WebDriverWait(webDriver, 30);
+        WebDriverWait wait = new WebDriverWait(webDriver, 60);
         wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(homepage.iframe));
         homepage.goToCheetah();
         webDriver.switchTo().defaultContent();
@@ -100,7 +100,7 @@ BambooTC29 extends TestBase {
         homepage.doGoogleSearch();
         homepage.waitForJSandJQueryToLoad();
         homepage.showResults();
-        WebDriverWait wait = new WebDriverWait(webDriver, 30);
+        WebDriverWait wait = new WebDriverWait(webDriver, 60);
         wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(homepage.iframe));
         wait.until(ExpectedConditions.visibilityOf(homepage.bspSearchItem));
         softAssert.assertTrue(homepage.isElementPresent(homepage.bspSearchItem), "BSP search results are present");

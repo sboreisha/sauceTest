@@ -21,7 +21,7 @@ public class CheetahPage extends Page {
     private WebElement searchResultIndex;
 
     public int getCheetahSearchCount() {
-        WebDriverWait wait = new WebDriverWait(webDriver, 60);
+        WebDriverWait wait = new WebDriverWait(webDriver, 120);
         wait.until(ExpectedConditions.visibilityOf(searchResultIndex));
         String str = cheetahResultCount.getText();
         return Integer.parseInt(str.substring(0, str.indexOf(" ")));
