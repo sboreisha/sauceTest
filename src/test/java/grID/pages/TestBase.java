@@ -122,38 +122,6 @@ public class TestBase {
         }
     }
 
-    public WebDriver getFF() {
-        DesiredCapabilities capability = new DesiredCapabilities();
-        capability = DesiredCapabilities.firefox();
-        capability.setCapability("platform", "Windows 8.1");
-        capability.setCapability("version", "47.0");
-        try {
-            webDriver = new RemoteWebDriver(new URL("http://WK-Sergei:ae7faa3c-25ae-499c-a647-ef64451c7a81@ondemand.saucelabs.com:80/wd/hub"), capability);
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
 
-        return webDriver;
-    }
 
-    public static FirefoxProfile setFFProfileNoBSP() {
-        FirefoxProfile ffProfile = new FirefoxProfile();
-        ffProfile.setPreference("intl.accept_languages", "en");
-        ffProfile.setAcceptUntrustedCertificates(true);
-        ffProfile.setPreference("browser.download.folderList", 2);
-        ffProfile.setPreference("browser.download.manager.showWhenStarting", false);
-        ffProfile.setPreference("browser.helperApps.neverAsk.saveToDisk", "application/x-xpinstall .xpi");
-        ffProfile.setPreference("browser.helperApps.neverAsk.openFile", "application/x-xpinstall .xpi");
-        ffProfile.setPreference("browser.helperApps.alwaysAsk.force", false);
-        ffProfile.setPreference("browser.download.manager.alertOnEXEOpen", false);
-        ffProfile.setPreference("browser.download.manager.focusWhenStarting", false);
-        ffProfile.setPreference("browser.download.manager.useWindow", false);
-        ffProfile.setPreference("browser.download.manager.showAlertOnComplete", false);
-        ffProfile.setPreference("browser.download.manager.closeWhenDone", false);
-        ffProfile.setPreference("browser.search.defaultenginename", "Google");
-        ffProfile.setPreference("browser.search.defaultenginename.US", "data:text/plain,browser.search.defaultenginename.US=Google");
-        ffProfile.setPreference("browser.search.countryCode", "US");
-        ffProfile.setPreference("browser.startup.homepage", "https://www.google.com/webhp?lr=&ie=UTF-8&oe=UTF-8&gws_rd=cr,ssl&ei=xoc0V7ybNMOnsAHJxpCwBg");
-        return ffProfile;
-    }
 }
